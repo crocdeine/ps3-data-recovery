@@ -1,0 +1,37 @@
+# ===== PS3 - USER DATA =====
+jpg 0 0x00 FF D8 FF E0
+jpg 0 0x00 FF D8 FF E1
+jpg 0 0x00 FF D8 FF DB
+mpo 0 0x00 FF D8 FF E2
+png 0 0x00 89 50 4E 47 0D 0A 1A 0A
+bmp 0 0x00 42 4D
+gif 0 0x00 47 49 46 38
+
+mp3 0 0x00 49 44 33
+aac 0 0x00 FF F1
+wav 0 0x00 52 49 46 46
+at3 0 0x00 52 49 46 46
+mp4 0 0x00 00 00 18 66 74 79 70
+avi 0 0x00 52 49 46 46
+m2ts 0 0x00 47 40
+
+# ===== PS3 - SAVES & CONFIG =====
+sfo 0 0x00 00 50 53 46 4F
+png 0 89 50 4E 47 0D 0A 1A 0A
+bin 0 0x00 00 00 00
+
+# ===== PS3 - SYSTEM FILES =====
+pkg 0 0x00 7F 50 4B 03 04
+p3t 0 0x00 00 50 33 54
+edat 0 0x00 00 00 00 00 01
+self 0 0x00 53 45 4C 46 00 01
+sprx 0 0x00 7F 45 4C 46 01 01
+raf 0 0x00 52 41 46 00
+rco 0 0x00 52 43 4F 00
+dat 0 0x00 00 00 00
+xml 0 0x00 3C 3F 78 6D 6C 20
+
+# ===== EXTRA FORMATS =====
+zip 0 0x00 50 4B 03 04
+tar 0 0x00 75 73 74 61 72 00 30
+gz 0 0x00 1F 8B 08
