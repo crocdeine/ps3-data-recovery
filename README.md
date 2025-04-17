@@ -63,7 +63,7 @@ photorec /d recovery_output /sig photorec.sig /cmd ps3_decrypted.img
 
 - `ps3_dump_decrypted`: Decryption binary (must be compiled)
 - `photorec.sig`: Custom signatures for PS3 file types
-- `tools/`: Scripts to help test offsets or check encryption mode
+- `decrypt/`: Scripts to help test offsets or check encryption mode
 
 ## Warning
 
