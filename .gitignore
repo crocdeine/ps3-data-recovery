@@ -1,7 +1,6 @@
 # Ignore disk images
 *.img
 *.iso
-*.bin
 
 # Ignore user-specific key
 eid_root_key
