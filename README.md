@@ -59,6 +59,10 @@ Run PhotoRec using the custom signature file:
 photorec /d recovery_output /sig photorec.sig /cmd ps3_decrypted.img
 ```
 
+### 3.bis Recover deleted files with python script
+
+Edit and run the carving_script.py in tools folder if Photorec doesn't use the .sig file
+
 ## Files
 
 - `ps3_dump_decrypted`: Decryption binary (must be compiled)
