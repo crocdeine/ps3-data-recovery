@@ -108,8 +108,4 @@ python3 script/verification_script.py
 ## License
 
 MIT License.
----
 
-## License
-
-MIT License.
