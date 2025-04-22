@@ -30,6 +30,18 @@ This project helps you:
   - `PhotoRec` (part of TestDisk)
   - `openssl` (used internally for AES)
 
+### 📦 Python Dependencies
+
+To install the required Python packages for the scripts in the `scripts/` folder, run:
+
+```bash
+pip install -r requirements.txt
+This will install all dependencies needed for:
+
+carving_script.py: File carving using custom logic.
+
+verification_script.py: Integrity check of recovered files (images, videos, audio, text, and archives).
+
 ## Usage
 
 ### 1. Build the decryption tool
