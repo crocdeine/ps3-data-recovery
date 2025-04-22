@@ -2,14 +2,14 @@ import os
 import shutil
 from pathlib import Path
 
-# Dossier de récupération PhotoRec
-recovery_dir = Path("/media/mathias/media/recover ps3/recovery")
+# Base recovery directory (change this path as needed)
+recovery_dir = Path("/path/to/recovery")
 
-# Dossier de sortie organisé
+# Output directory for organized files
 output_dir = recovery_dir / "organized"
 output_dir.mkdir(exist_ok=True)
 
-# Extensions classées par type
+# File extensions grouped by category
 file_types = {
     "photos": [".jpg", ".jpeg", ".png", ".bmp", ".gif", ".mpo"],
     "videos": [".mp4", ".avi", ".m2ts"],
@@ -20,7 +20,7 @@ file_types = {
     "unknown": [],
 }
 
-# Fonction pour trouver la catégorie d’un fichier
+# Determine the category of a file based on its extension
 def categorize_file(file_path):
     ext = file_path.suffix.lower()
     for category, extensions in file_types.items():
@@ -28,7 +28,7 @@ def categorize_file(file_path):
             return category
     return "unknown"
 
-# Parcours des fichiers et tri
+# Traverse the recovery directory and move files into categorized folders
 for root, _, files in os.walk(recovery_dir):
     for file in files:
         file_path = Path(root) / file
@@ -38,4 +38,4 @@ for root, _, files in os.walk(recovery_dir):
             category_path.mkdir(parents=True, exist_ok=True)
             shutil.move(str(file_path), category_path / file)
 
-print("✅ Tri terminé. Fichiers déplacés dans : organized/")
+print("✅ Sorting complete. Files have been moved to the 'organized/' directory.")
