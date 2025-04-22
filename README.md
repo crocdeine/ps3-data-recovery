@@ -1,5 +1,7 @@
 # PS3 Data Recovery
 
+[![GitHub stars](https://img.shields.io/github/stars/crocdeine/ps3-data-recovery.svg?style=social&label=Star)](https://github.com/crocdeine/ps3-data-recovery)
+
 This project provides a complete workflow to recover deleted files from a formatted internal PS3 hard drive.  
 It includes tools and documentation to decrypt the drive and run file carving with a custom PhotoRec signature set or custom Python scripts.
 
@@ -120,8 +122,3 @@ python3 script/verification_script.py
 ## License
 
 MIT License.
-
-[![GitHub stars](https://img.shields.io/github/stars/crocdeine/ton-repo.svg?style=social&label=Star)](https://github.com/crocdeine/ps3-data-recovery)
-
-
-
