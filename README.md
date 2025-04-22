@@ -16,6 +16,7 @@ This project helps you:
 - PS3 disk image decryption (AES-CBC/ECB with correct key and offset).
 - Custom `photorec.sig` file with tailored PS3 file signatures.
 - Alternative Python carving script for unsupported use cases.
+- File sorting script to organize recovered files by type.
 - File verification tool to detect and separate corrupted files.
 - Clean CLI workflow and documentation.
 
@@ -40,12 +41,12 @@ To install the required Python packages for the scripts in the `scripts/` folder
 ```bash
 pip install -r requirements.txt
 ```
+
 This will install all dependencies needed for:
 
-carving_script.py: File carving using custom logic.
-
-verification_script.py: Integrity check of recovered files (images, videos, audio, text, and archives).
-
+- `carving_script.py`: File carving using custom logic.
+- `verification_script.py`: Integrity check of recovered files (images, videos, audio, text, and archives).
+- `sort_recovered_files.py`: Sort files recovered by PhotoRec or carving into categorized folders.
 
 ## Usage
 
@@ -81,9 +82,19 @@ photorec /d recovery_output /sig photorec.sig /cmd ps3_decrypted.img
 Use the `carving_script.py` located in the `script/` folder if PhotoRec does not properly use the `.sig` file.
 This script performs basic signature-based carving manually on the decrypted image.
 
-### 4. Verify recovered files
+### 4. Sort recovered files
 
-Once files are recovered and organized, use the `verification_script.py` in the `script/` folder to scan all categorized files.
+To automatically categorize recovered files by type, use the `sort_recovered_files.py` script:
+
+```bash
+python3 script/sort_recovered_files.py
+```
+
+This will place files into subdirectories inside a `organized/` folder.
+
+### 5. Verify recovered files
+
+Once files are organized, use the `verification_script.py` to scan all categorized files.
 Corrupted files will be automatically moved to a `corrupted/` subfolder in their respective categories.
 
 Run with:
@@ -97,6 +108,7 @@ python3 script/verification_script.py
 - `photorec.sig`: Custom signatures for PS3 file types
 - `decrypt/`: Scripts to help test offsets or check encryption mode
 - `script/carving_script.py`: Alternative file carving script in Python
+- `script/sort_recovered_files.py`: Script to organize recovered files by type
 - `script/verification_script.py`: Script to verify integrity of recovered files
 
 ## Warning
@@ -108,4 +120,5 @@ python3 script/verification_script.py
 ## License
 
 MIT License.
+
 
