@@ -121,4 +121,7 @@ python3 script/verification_script.py
 
 MIT License.
 
+[![GitHub stars](https://img.shields.io/github/stars/crocdeine/ton-repo.svg?style=social&label=Star)]([https://github.com/ton-pseudo/ton-repo](https://github.com/crocdeine/ps3-data-recovery))
+
+
 
