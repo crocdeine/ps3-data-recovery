@@ -1,7 +1,7 @@
 # PS3 Data Recovery
 
 This project provides a complete workflow to recover deleted files from a formatted internal PS3 hard drive.  
-It includes tools and documentation to decrypt the drive and run file carving with a custom PhotoRec signature set.
+It includes tools and documentation to decrypt the drive and run file carving with a custom PhotoRec signature set or custom Python scripts.
 
 ## Overview
 
@@ -9,12 +9,14 @@ The PlayStation 3 uses encrypted internal hard drives. When a drive is formatted
 
 This project helps you:
 1. Decrypt a full disk image using your console's `eid_root_key`.
-2. Analyze or recover user data using `PhotoRec`.
+2. Analyze or recover user data using `PhotoRec` or custom scripts.
 
 ## Features
 
 - PS3 disk image decryption (AES-CBC/ECB with correct key and offset).
 - Custom `photorec.sig` file with tailored PS3 file signatures.
+- Alternative Python carving script for unsupported use cases.
+- File verification tool to detect and separate corrupted files.
 - Clean CLI workflow and documentation.
 
 ---
@@ -29,6 +31,7 @@ This project helps you:
   - `xxd`, `hexdump` (for CLI analysis)
   - `PhotoRec` (part of TestDisk)
   - `openssl` (used internally for AES)
+  - `ffmpeg`, `python3`, `pip`, `Pillow` (for Python verification script)
 
 ### 📦 Python Dependencies
 
@@ -42,6 +45,7 @@ This will install all dependencies needed for:
 carving_script.py: File carving using custom logic.
 
 verification_script.py: Integrity check of recovered files (images, videos, audio, text, and archives).
+
 
 ## Usage
 
@@ -72,20 +76,38 @@ Run PhotoRec using the custom signature file:
 photorec /d recovery_output /sig photorec.sig /cmd ps3_decrypted.img
 ```
 
-### 3.bis Recover deleted files with python script
+### 3.bis Recover deleted files with Python script
 
-Edit and run the carving_script.py in tools folder if Photorec doesn't use the .sig file
+Use the `carving_script.py` located in the `script/` folder if PhotoRec does not properly use the `.sig` file.
+This script performs basic signature-based carving manually on the decrypted image.
+
+### 4. Verify recovered files
+
+Once files are recovered and organized, use the `verification_script.py` in the `script/` folder to scan all categorized files.
+Corrupted files will be automatically moved to a `corrupted/` subfolder in their respective categories.
+
+Run with:
+```bash
+python3 script/verification_script.py
+```
 
 ## Files
 
 - `ps3_dump_decrypted`: Decryption binary (must be compiled)
 - `photorec.sig`: Custom signatures for PS3 file types
 - `decrypt/`: Scripts to help test offsets or check encryption mode
+- `script/carving_script.py`: Alternative file carving script in Python
+- `script/verification_script.py`: Script to verify integrity of recovered files
 
 ## Warning
 
 🚫 **Do NOT share your `eid_root_key`.** It is unique to your console and should remain private.
 
+---
+
+## License
+
+MIT License.
 ---
 
 ## License
