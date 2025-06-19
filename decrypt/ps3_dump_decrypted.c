@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
 
         // Ici, déchiffrement des données avec la clé eid_root_key (à ajuster selon le mode AES)
 
-        // Exemple de déchiffrement fictif (simuler déchiffrement, remplace avec ton propre code)
+        // Exemple de déchiffrement fictif
         for (size_t i = 0; i < block_size; i++) {
             buffer[i] ^= eid_root_key[i % 48];  // Simple XOR pour illustration
         }
