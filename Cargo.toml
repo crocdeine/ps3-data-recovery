@@ -7,11 +7,15 @@ license = "MIT"
 repository = "https://github.com/crocdeine/ps3-data-recovery"
 
 [dependencies]
+aes = "0.8"
 anyhow = "1"
+cbc = "0.1"
 clap = { version = "4", features = ["derive"] }
 flate2 = "1"
 image = { version = "0.25", default-features = false, features = ["jpeg", "png", "gif", "bmp"] }
+rayon = "1"
 tar = "0.4"
+xts-mode = "0.5"
 zip = { version = "2", default-features = false, features = ["deflate"] }
 
 [dev-dependencies]

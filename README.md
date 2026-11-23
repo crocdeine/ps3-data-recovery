@@ -7,13 +7,13 @@
 
 `ps3recover` is a single command-line tool for recovering photos, videos, music and save data from a formatted PS3 internal hard drive. It runs on macOS, Windows and Linux, and needs nothing else installed.
 
-> **Status: work in progress.** Finding, sorting and checking files works today on any decrypted image. **Decryption of the PS3 drive is not available yet**: the previous version did not really decrypt anything (it applied a placeholder XOR), so it has been removed while the real decryption is written.
+> **Status: work in progress.** Decryption, file carving, sorting and checking all work and are tested on synthetic images. They have not yet been tried on a real PS3 drive, so please [open an issue](https://github.com/crocdeine/ps3-data-recovery/issues) with your console model if you try it.
 
 ## How it works
 
 The PS3 encrypts its internal drive with keys derived from a console-specific secret, the `eid_root_key`. Formatting the drive does not erase the data, it only makes it unreachable. Recovery takes three stages:
 
-1. **Decrypt** the raw image of the drive with the console's `eid_root_key` *(coming soon)*.
+1. **Decrypt** the raw image of the drive with the console's `eid_root_key`.
 2. **Carve**: scan the decrypted image for known file headers (JPEG, PNG, MP4, PARAM.SFO, PKG…) and extract each file into a folder for its type.
 3. **Verify**: open each recovered file and move the broken ones into a `corrupted/` folder.
 
@@ -40,12 +40,14 @@ cargo build --release
 ## Usage
 
 ```bash
-# 1. Decrypt the drive image (not available yet)
+# 1. Decrypt the drive image
 ps3recover decrypt ps3_image.img ps3_decrypted.img --key eid_root_key
 
 # 2 + 3. Extract the files, then check them
 ps3recover recover ps3_decrypted.img recovered/
 ```
+
+`decrypt` first checks the key on the drive's first sector. If the key is wrong, or the image does not start at the drive's first sector, it stops before writing anything. It also detects the console model on its own; you can force it with `--model fat` or `--model slim`.
 
 Recovered files land in `recovered/photos`, `recovered/videos`, `recovered/music`, `recovered/ps3_files`, `recovered/documents` and `recovered/archives`. Each file is named after its position in the image (in hexadecimal), so you can find it again in a hex editor.
 
@@ -67,6 +69,17 @@ ps3recover verify organized/
 
 Run `ps3recover --help` or `ps3recover <command> --help` for every option.
 
+## How the PS3 encrypts its drive
+
+| Console | Models | Cipher (per 512-byte sector) |
+|---|---|---|
+| Fat | CECHAxx to CECHQxx | AES-192-CBC, all-zero IV |
+| Slim, Super Slim | CECH-2xxx, 3xxx, 4xxx | AES-128-XTS, tweak = sector number |
+
+The keys come from encrypting two fixed seeds with AES-256-CBC, keyed by the `eid_root_key` (its first 32 bytes are the key, its last 16 bytes the IV). Every pair of bytes on the drive is also swapped. Sources: [`ps3hdd_keygen.sh`](https://github.com/einsteinx2/PS3-Reclaim-HDD-Space/blob/master/ps3hdd_keygen.sh), [psdevwiki: HDD Encryption](https://www.psdevwiki.com/ps3/Talk:HDD_Encryption), [PS3 drive decryption notes](https://gist.github.com/andshrew/1d0b5e35308a6fd9770831e47950be0a). Details are in [`src/decrypt.rs`](src/decrypt.rs).
+
+Super Slim support relies on these sources saying it matches the Slim. If `decrypt` refuses a Super Slim drive with a key you know is right, please open an issue.
+
 ## Development
 
 ```bash
@@ -74,6 +87,8 @@ cargo test     # run the tests
 cargo clippy   # lint
 cargo fmt      # format
 ```
+
+The decryption tests use small images encrypted by OpenSSL, not by this tool, so they check it against an independent implementation. [`tests/fixtures/make_fixtures.py`](tests/fixtures/make_fixtures.py) regenerates them.
 
 File signatures live in [`src/signatures.rs`](src/signatures.rs). After changing them, regenerate the PhotoRec file with `cargo run -- photorec-sig > photorec.sig` (a test checks that it is up to date).
 

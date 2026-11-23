@@ -26,3 +26,6 @@ Thumbs.db
 
 # Rust build output
 /target/
+
+# Test fixtures are small synthetic images, not real drives
+!tests/fixtures/*.img
