@@ -24,6 +24,9 @@ enum Command {
         /// File holding the 48-byte eid_root_key (binary).
         #[arg(short, long)]
         key: PathBuf,
+        /// Console model. Detected automatically when left out.
+        #[arg(short, long, value_enum)]
+        model: Option<decrypt::Model>,
     },
     /// Find files in a decrypted image and save them sorted by type.
     Carve {
@@ -57,7 +60,12 @@ enum Command {
 
 fn run(cli: Cli) -> anyhow::Result<()> {
     match cli.command {
-        Command::Decrypt { image, output, key } => decrypt::run(&image, &output, &key),
+        Command::Decrypt {
+            image,
+            output,
+            key,
+            model,
+        } => decrypt::run(&image, &output, &key, model).map(|_| ()),
         Command::Carve { image, output } => carve::run(&image, &output).map(|_| ()),
         Command::Sort { input, output } => {
             let output = output.unwrap_or_else(|| input.join("organized"));
