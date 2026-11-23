@@ -108,6 +108,10 @@ The decryption tests use small images encrypted by OpenSSL, not by this tool, so
 
 File signatures live in [`src/signatures.rs`](src/signatures.rs). After changing them, regenerate the PhotoRec file with `cargo run -- photorec-sig > photorec.sig` (a test checks that it is up to date).
 
+### Publishing a release
+
+Bump `version` in `Cargo.toml`, merge it, then run the **Release** workflow from the Actions tab with the matching version (for example `v0.1.0`). It builds the programs for every system, then creates the tag and the GitHub release with them attached.
+
 ## License
 
 MIT License.
