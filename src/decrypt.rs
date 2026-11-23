@@ -133,7 +133,7 @@ impl SectorCipher {
 
 /// Swap every pair of bytes (the PS3 stores drive data 16-bit byte-swapped).
 fn swap_byte_pairs(data: &mut [u8]) {
-    for pair in data.chunks_exact_mut(2) {
+    for pair in data.as_chunks_mut::<2>().0 {
         pair.swap(0, 1);
     }
 }
