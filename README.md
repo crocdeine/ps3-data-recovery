@@ -9,6 +9,8 @@
 
 > **Status: work in progress.** Decryption, file carving, sorting and checking all work and are tested on synthetic images. They have not yet been tried on a real PS3 drive, so please [open an issue](https://github.com/crocdeine/ps3-data-recovery/issues) with your console model if you try it.
 
+**New to this?** Follow the step-by-step guide: [English](docs/GUIDE.md) · [Français](docs/GUIDE.fr.md). It covers copying the drive, getting the key from the console, and running the tool on macOS, Windows and Linux.
+
 ## How it works
 
 The PS3 encrypts its internal drive with keys derived from a console-specific secret, the `eid_root_key`. Formatting the drive does not erase the data, it only makes it unreachable. Recovery takes three stages:
