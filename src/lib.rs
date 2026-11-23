@@ -11,6 +11,7 @@
 pub mod carve;
 pub mod category;
 pub mod decrypt;
+pub mod formats;
 pub mod fsutil;
 pub mod signatures;
 pub mod sort;

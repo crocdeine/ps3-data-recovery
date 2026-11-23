@@ -14,7 +14,7 @@
 The PS3 encrypts its internal drive with keys derived from a console-specific secret, the `eid_root_key`. Formatting the drive does not erase the data, it only makes it unreachable. Recovery takes three stages:
 
 1. **Decrypt** the raw image of the drive with the console's `eid_root_key`.
-2. **Carve**: scan the decrypted image for known file headers (JPEG, PNG, MP4, PARAM.SFO, PKG…) and extract each file into a folder for its type.
+2. **Carve**: scan the decrypted image for known file headers (JPEG, PNG, MP4, PARAM.SFO, PKG…) and extract each file into a folder for its type. For most types the tool follows the file's structure to find exactly where it ends, so files come out at their real size and pictures stored inside other files (thumbnails, files in a ZIP) are not split out.
 3. **Verify**: open each recovered file and move the broken ones into a `corrupted/` folder.
 
 ## What you need
@@ -48,6 +48,20 @@ ps3recover recover ps3_decrypted.img recovered/
 ```
 
 `decrypt` first checks the key on the drive's first sector. If the key is wrong, or the image does not start at the drive's first sector, it stops before writing anything. It also detects the console model on its own; you can force it with `--model fat` or `--model slim`.
+
+### What can be recovered
+
+| Type | Extensions | Exact end found |
+|---|---|---|
+| Photos | jpg, mpo, png, gif, bmp | yes |
+| Videos | mp4, m2ts (PS3 recordings), avi | yes |
+| Music | mp3, wav / at3 | yes |
+| PS3 files | PARAM.SFO, pkg, self / sprx | yes |
+| PS3 files | edat, rco, p3t | no: cut at the next file or a size limit |
+| Documents and archives | xml, zip, tar | yes |
+| Archives | gz | no |
+
+Carving works on files stored in one piece. A file split across several places on the drive (fragmented) usually comes out damaged, and `verify` moves it to `corrupted/`.
 
 Recovered files land in `recovered/photos`, `recovered/videos`, `recovered/music`, `recovered/ps3_files`, `recovered/documents` and `recovered/archives`. Each file is named after its position in the image (in hexadecimal), so you can find it again in a hex editor.
 
