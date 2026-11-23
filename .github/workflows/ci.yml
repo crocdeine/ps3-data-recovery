@@ -5,6 +5,10 @@ on:
     branches: [main]
     tags: ["v*"]
   pull_request:
+  # Publishing a release on GitHub (Releases > Draft a new release) builds
+  # the programs and attaches them to it.
+  release:
+    types: [published]
 
 jobs:
   test:
